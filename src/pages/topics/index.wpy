@@ -125,21 +125,6 @@
       this.categories = categories
       this.$apply()
     }
-    onLoad() {
-      // 获取分类数据
-      this.getCategories()
-      // 调用组件的 reload 方法
-      this.$invoke('topiclist', 'reload')
-    }
-    async onPullDownRefresh() {
-      // 调用组件的 reload 方法
-      await this.$invoke('topiclist', 'reload')
-      wepy.stopPullDownRefresh()
-    }
-    onReachBottom () {
-      // 调用组件的 loadMore 方法
-      this.$invoke('topiclist', 'loadMore')
-    }
     methods = {
       // 切换分类列表展示
       toggle () {
@@ -155,6 +140,26 @@
         // 调用组件的 reload 方法
         this.$invoke('topiclist', 'reload')
       }
+    }
+    onLoad() {
+      // 获取分类数据
+      this.getCategories()
+      // 调用组件的 reload 方法
+      this.$invoke('topiclist', 'reload')
+    }
+    async onPullDownRefresh() {
+      // 调用组件的 reload 方法
+      await this.$invoke('topiclist', 'reload')
+      wepy.stopPullDownRefresh()
+    }
+    onReachBottom () {
+      // 调用组件的 loadMore 方法
+      this.$invoke('topiclist', 'loadMore')
+    }
+    onShow() {
+      this.$parent.checkRefreshPages(this.getCurrentPages().pop().route, () => {
+        this.$invoke('topiclist', 'reload')
+      })
     }
   }
 </script>
