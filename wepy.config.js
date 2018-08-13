@@ -41,6 +41,14 @@ module.exports = {
     }
   },
   plugins: {
+    replace: {
+      filter: /\.js$/,
+      config: {
+        find: /__BASE_URL__/g,
+        // 域名回头换成自己的
+        replace: prod ? "'https://weapp.laravel-china.org/api'" : "'http://larabbs.test/api'"
+      }
+    }
   },
   appConfig: {
     noPromiseAPI: ['createSelectorQuery']
@@ -68,6 +76,13 @@ if (prod) {
         png: {
           quality: 80
         }
+      }
+    },
+    replace: {
+      filter: /\.js$/,
+      config: {
+        find: /__BASE_URL__/g,
+        replace: prod ? "'https://weapp.laravel-china.org/api'" : "'http://larabbs.test/api'"
       }
     }
   }
